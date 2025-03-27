@@ -142,9 +142,10 @@ pay.createHttp(...);
 |[签名验证](https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay4_1.shtml)|[verifySign](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/verifySign.md)|
 |[微信提现到零钱](https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml)|[batches_transfer](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/batches_transfer.md)|
 |[分账](https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml)|[create_profitsharing_orders](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/profitsharing.md)|
-
-
-
+|[用户确认模式，发起商家转账](https://pay.weixin.qq.com/doc/v3/merchant/4012716434)|[transfer_bills](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/transfer_bills.md)|
+|[用户确认模式，撤销转账](https://pay.weixin.qq.com/doc/v3/merchant/4012716458)|[transfer_bills](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/transfer_bills.md)|
+|[用户确认模式，商户单号查询转账单](https://pay.weixin.qq.com/doc/v3/merchant/4012716437)|[transfer_bills](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/transfer_bills.md)|
+|[用户确认模式，微信单号查询转账单](https://pay.weixin.qq.com/doc/v3/merchant/4012716457)|[transfer_bills](https://github.com/klover2/wechatpay-node-v3-ts/blob/master/docs/transfer_bills.md)|
 ## 版本介绍
 | 版本号 | 版本介绍 |
 |--|--|
@@ -177,10 +178,12 @@ pay.createHttp(...);
 |v2.1.8|修复回调签名key错误|
 |v2.2.0|修复回调解密报Unsupported state or unable to authenticate data |
 |v2.2.1|上传图片 |
+|v3.0.0|增家商家转账用户确认模式
 
 ## 文档
 [v2支付文档](https://pay.weixin.qq.com/wiki/doc/api/index.html)
 [v3支付文档](https://pay.weixin.qq.com/wiki/doc/apiv3/index.shtml)
+[商家转账用户确认模式](https://pay.weixin.qq.com/doc/v3/merchant/4012711988)
 
 
 ## 贡献
