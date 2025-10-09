@@ -122,7 +122,7 @@ class Pay extends Base {
    */
   public async get_certificates(apiSecret: string): Promise<ICertificates[]> {
     const url = 'https://api.mch.weixin.qq.com/v3/certificates';
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
 
     const result = await this.httpService.get(url, headers);
@@ -152,7 +152,7 @@ class Pay extends Base {
    */
   private async fetchCertificates(apiSecret?: string) {
     const url = 'https://api.mch.weixin.qq.com/v3/certificates';
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json' });
     const result = await this.httpService.get(url, headers);
 
@@ -370,7 +370,7 @@ class Pay extends Base {
   /**
    * 参数初始化
    */
-  protected init(method: string, url: string, params?: Record<string, any>) {
+  protected buildAuthorization(method: string, url: string, params?: Record<string, any>) {
     const nonce_str = Math.random()
         .toString(36)
         .substr(2, 15),
@@ -394,7 +394,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/pay/transactions/h5';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json', 'Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -411,7 +411,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/combine-transactions/h5';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
 
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json' });
 
@@ -430,7 +430,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/pay/transactions/native';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -447,7 +447,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/combine-transactions/native';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -464,7 +464,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/pay/transactions/app';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     const result = await this.httpService.post(url, _params, headers);
     if (result.status === 200 && result.data.prepay_id) {
@@ -498,7 +498,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/combine-transactions/app';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     const result = await this.httpService.post(url, _params, headers);
     if (result.status === 200 && result.data.prepay_id) {
@@ -532,7 +532,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     const result = await this.httpService.post(url, _params, headers);
     
@@ -566,7 +566,7 @@ class Pay extends Base {
     };
     const url = 'https://api.mch.weixin.qq.com/v3/combine-transactions/jsapi';
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     const result = await this.httpService.post(url, _params, headers);
     if (result.status === 200 && result.data.prepay_id) {
@@ -600,7 +600,7 @@ class Pay extends Base {
       throw new Error('缺少transaction_id或者out_trade_no');
     }
 
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(url, headers);
   }
@@ -612,7 +612,7 @@ class Pay extends Base {
     if (!combine_out_trade_no) throw new Error('缺少combine_out_trade_no');
     const url = `https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/${combine_out_trade_no}`;
 
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(url, headers);
   }
@@ -628,7 +628,7 @@ class Pay extends Base {
       mchid: this.mchid,
     };
     const url = `https://api.mch.weixin.qq.com/v3/pay/transactions/out-trade-no/${out_trade_no}/close`;
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -646,7 +646,7 @@ class Pay extends Base {
       sub_orders,
     };
     const url = `https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/${combine_out_trade_no}/close`;
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -669,7 +669,7 @@ class Pay extends Base {
       })
       .join('&');
     url = url + `?${querystring}`;
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(url, headers);
   }
@@ -692,7 +692,7 @@ class Pay extends Base {
       })
       .join('&');
     url = url + `?${querystring}`;
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(url, headers);
   }
@@ -701,7 +701,7 @@ class Pay extends Base {
    * @param download_url 请求参数 路径 参数介绍 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml
    */
   public async downloadBill(download_url: string) {
-    const authorization = this.init('GET', download_url);
+    const authorization = this.buildAuthorization('GET', download_url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(download_url, headers);
   }
@@ -716,7 +716,7 @@ class Pay extends Base {
       ...params,
     };
 
-    const authorization = this.init('POST', url, _params);
+    const authorization = this.buildAuthorization('POST', url, _params);
     const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
     return await this.httpService.post(url, _params, headers);
   }
@@ -728,7 +728,7 @@ class Pay extends Base {
     if (!out_refund_no) throw new Error('缺少out_refund_no');
     const url = `https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/${out_refund_no}`;
 
-    const authorization = this.init('GET', url);
+    const authorization = this.buildAuthorization('GET', url);
     const headers = this.getHeaders(authorization);
     return await this.httpService.get(url, headers);
   }
@@ -736,233 +736,9 @@ class Pay extends Base {
   //#region 商家转账到零钱
   /**
    * 发起商家转账零钱
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml
+   * @documentation 请看文档https://pay.weixin.qq.com/doc/v3/merchant/4012716434
    */
   public async batches_transfer(params: BatchesTransfer.Input): Promise<BatchesTransfer.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/transfer/batches';
-    // 请求参数
-    const _params = {
-      appid: this.appid,
-      ...params,
-    };
-
-    const serial_no = _params?.wx_serial_no;
-    delete _params.wx_serial_no;
-    const authorization = this.init('POST', url, _params);
-
-    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
-    return await this.httpService.post(url, _params, headers);
-  }
-
-  /**
-   * 微信批次单号查询批次单API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_2.shtml
-   */
-  public async query_batches_transfer_list_wx(
-    params: BatchesTransfer.QueryBatchesTransferByWx.Input,
-  ): Promise<BatchesTransfer.QueryBatchesTransferByWx.IOutput> {
-    const baseUrl = `https://api.mch.weixin.qq.com/v3/transfer/batches/batch-id/${params.batch_id}`;
-    const url = baseUrl + this.objectToQueryString(params, ['batch_id']);
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 微信明细单号查询明细单API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_3.shtml
-   */
-  public async query_batches_transfer_detail_wx(
-    params: BatchesTransfer.QueryBatchesTransferDetailByWx.Input,
-  ): Promise<BatchesTransfer.QueryBatchesTransferDetailByWx.IOutput> {
-    const baseUrl = `https://api.mch.weixin.qq.com/v3/transfer/batches/batch-id/${params.batch_id}/details/detail-id/${params.detail_id}`;
-    const url = baseUrl + this.objectToQueryString(params, ['batch_id', 'detail_id']);
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 商家批次单号查询批次单API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_5.shtml
-   */
-  public async query_batches_transfer_list(
-    params: BatchesTransfer.QueryBatchesTransferList.Input,
-  ): Promise<BatchesTransfer.QueryBatchesTransferList.IOutput> {
-    const baseUrl = `https://api.mch.weixin.qq.com/v3/transfer/batches/out-batch-no/${params.out_batch_no}`;
-    const url = baseUrl + this.objectToQueryString(params, ['out_batch_no']);
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 商家明细单号查询明细单API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_6.shtml
-   */
-  public async query_batches_transfer_detail(
-    params: BatchesTransfer.QueryBatchesTransferDetail.Input,
-  ): Promise<BatchesTransfer.QueryBatchesTransferDetail.IOutput> {
-    const baseUrl = `https://api.mch.weixin.qq.com/v3/transfer/batches/out-batch-no/${params.out_batch_no}/details/out-detail-no/${params.out_detail_no}`;
-    const url = baseUrl + this.objectToQueryString(params, ['out_batch_no', 'out_detail_no']);
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  //#endregion 商家转账到零钱
-  //#region 分账
-  /**
-   * 请求分账API
-   * @param params
-   * @returns
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
-   */
-  public async create_profitsharing_orders(
-    params: ProfitSharing.CreateProfitSharingOrders.Input,
-  ): Promise<ProfitSharing.CreateProfitSharingOrders.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/orders';
-    // 请求参数
-    const _params = {
-      appid: this.appid,
-      ...params,
-    };
-
-    const serial_no = _params?.wx_serial_no;
-    delete _params.wx_serial_no;
-    const authorization = this.init('POST', url, _params);
-
-    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
-    return await this.httpService.post(url, _params, headers);
-  }
-  /**
-   * 查询分账结果API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
-   */
-  public async query_profitsharing_orders(transaction_id: string, out_order_no: string): Promise<ProfitSharing.CreateProfitSharingOrders.IOutput> {
-    if (!transaction_id) throw new Error('缺少transaction_id');
-    if (!out_order_no) throw new Error('缺少out_order_no');
-    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/orders/${out_order_no}`;
-    url = url + this.objectToQueryString({ transaction_id });
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 请求分账回退API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_3.shtml
-   */
-  public async profitsharing_return_orders(
-    params: ProfitSharing.ProfitSharingReturnOrders.Input,
-  ): Promise<ProfitSharing.ProfitSharingReturnOrders.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/return-orders';
-    // 请求参数
-    const _params = {
-      ...params,
-    };
-
-    const authorization = this.init('POST', url, _params);
-    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
-    return await this.httpService.post(url, _params, headers);
-  }
-  /**
-   * 查询分账回退结果API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_4.shtml
-   */
-  public async query_profitsharing_return_orders(
-    out_return_no: string,
-    out_order_no: string,
-  ): Promise<ProfitSharing.ProfitSharingReturnOrders.IOutput> {
-    if (!out_return_no) throw new Error('缺少out_return_no');
-    if (!out_order_no) throw new Error('缺少out_order_no');
-    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/return-orders/${out_return_no}`;
-    url = url + this.objectToQueryString({ out_order_no });
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 解冻剩余资金API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml
-   */
-  public async profitsharing_orders_unfreeze(
-    params: ProfitSharing.ProfitsharingOrdersUnfreeze.Input,
-  ): Promise<ProfitSharing.ProfitsharingOrdersUnfreeze.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/orders/unfreeze';
-    // 请求参数
-    const _params = {
-      ...params,
-    };
-
-    const authorization = this.init('POST', url, _params);
-    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
-    return await this.httpService.post(url, _params, headers);
-  }
-  /**
-   * 查询剩余待分金额API
-   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml
-   */
-  public async query_profitsharing_amounts(transaction_id: string): Promise<ProfitSharing.QueryProfitSharingAmounts.IOutput> {
-    if (!transaction_id) throw new Error('缺少transaction_id');
-    const url = `https://api.mch.weixin.qq.com/v3/profitsharing/transactions/${transaction_id}/amounts`;
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  /**
-   * 添加分账接收方API
-   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
-   */
-  public async profitsharing_receivers_add(
-    params: ProfitSharing.ProfitSharingReceiversAdd.Input,
-  ): Promise<ProfitSharing.ProfitSharingReceiversAdd.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/receivers/add';
-    // 请求参数
-    const _params = {
-      appid: this.appid,
-      ...params,
-    };
-
-    const serial_no = _params?.wx_serial_no;
-    delete _params.wx_serial_no;
-    const authorization = this.init('POST', url, _params);
-
-    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
-    return await this.httpService.post(url, _params, headers);
-  }
-  /**
-   * 删除分账接收方API
-   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml
-   */
-  public async profitsharing_receivers_delete(
-    params: ProfitSharing.ProfitSharingReceiversDelete.Input,
-  ): Promise<ProfitSharing.ProfitSharingReceiversDelete.IOutput> {
-    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/receivers/delete';
-    // 请求参数
-    const _params = {
-      appid: this.appid,
-      ...params,
-    };
-
-    const authorization = this.init('POST', url, _params);
-
-    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
-    return await this.httpService.post(url, _params, headers);
-  }
-  /**
-   * 申请分账账单API
-   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_11.shtml
-   */
-  public async profitsharing_bills(bill_date: string, tar_type?: string): Promise<ProfitSharing.ProfitSharingBills.IOutput> {
-    if (!bill_date) throw new Error('缺少bill_date');
-    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/bills`;
-    url = url + this.objectToQueryString({ bill_date, ...(tar_type && { tar_type }) });
-    const authorization = this.init('GET', url);
-    const headers = this.getHeaders(authorization);
-    return await this.httpService.get(url, headers);
-  }
-  //#endregion 分账
-
-  /**
-   * 商家转账用户确认模式下，用户申请收款时，商户可通过此接口申请创建转账单
-   */
-  public async transfer_bills(params: TransferBills.Input): Promise<TransferBills.IOutput> {
     const url = 'https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills';
     // 请求参数
     const _params = {
@@ -974,7 +750,7 @@ class Pay extends Base {
     delete _params.wx_serial_no;
     const authorization = this.buildAuthorization('POST', url, _params);
 
-    const headers = this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
+    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
     return await this.httpService.post(url, _params, headers);
   }
 
@@ -1012,6 +788,160 @@ class Pay extends Base {
     const headers = this.getHeaders(authorization, { mchid: this.mchid });
     return await this.httpService.get(url, headers);
   }
+  //#endregion 商家转账到零钱
+  //#region 分账
+  /**
+   * 请求分账API
+   * @param params
+   * @returns
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
+   */
+  public async create_profitsharing_orders(
+    params: ProfitSharing.CreateProfitSharingOrders.Input,
+  ): Promise<ProfitSharing.CreateProfitSharingOrders.IOutput> {
+    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/orders';
+    // 请求参数
+    const _params = {
+      appid: this.appid,
+      ...params,
+    };
+
+    const serial_no = _params?.wx_serial_no;
+    delete _params.wx_serial_no;
+    const authorization = this.buildAuthorization('POST', url, _params);
+
+    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
+    return await this.httpService.post(url, _params, headers);
+  }
+  /**
+   * 查询分账结果API
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
+   */
+  public async query_profitsharing_orders(transaction_id: string, out_order_no: string): Promise<ProfitSharing.CreateProfitSharingOrders.IOutput> {
+    if (!transaction_id) throw new Error('缺少transaction_id');
+    if (!out_order_no) throw new Error('缺少out_order_no');
+    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/orders/${out_order_no}`;
+    url = url + this.objectToQueryString({ transaction_id });
+    const authorization = this.buildAuthorization('GET', url);
+    const headers = this.getHeaders(authorization);
+    return await this.httpService.get(url, headers);
+  }
+  /**
+   * 请求分账回退API
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_3.shtml
+   */
+  public async profitsharing_return_orders(
+    params: ProfitSharing.ProfitSharingReturnOrders.Input,
+  ): Promise<ProfitSharing.ProfitSharingReturnOrders.IOutput> {
+    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/return-orders';
+    // 请求参数
+    const _params = {
+      ...params,
+    };
+
+    const authorization = this.buildAuthorization('POST', url, _params);
+    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
+    return await this.httpService.post(url, _params, headers);
+  }
+  /**
+   * 查询分账回退结果API
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_4.shtml
+   */
+  public async query_profitsharing_return_orders(
+    out_return_no: string,
+    out_order_no: string,
+  ): Promise<ProfitSharing.ProfitSharingReturnOrders.IOutput> {
+    if (!out_return_no) throw new Error('缺少out_return_no');
+    if (!out_order_no) throw new Error('缺少out_order_no');
+    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/return-orders/${out_return_no}`;
+    url = url + this.objectToQueryString({ out_order_no });
+    const authorization = this.buildAuthorization('GET', url);
+    const headers = this.getHeaders(authorization);
+    return await this.httpService.get(url, headers);
+  }
+  /**
+   * 解冻剩余资金API
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml
+   */
+  public async profitsharing_orders_unfreeze(
+    params: ProfitSharing.ProfitsharingOrdersUnfreeze.Input,
+  ): Promise<ProfitSharing.ProfitsharingOrdersUnfreeze.IOutput> {
+    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/orders/unfreeze';
+    // 请求参数
+    const _params = {
+      ...params,
+    };
+
+    const authorization = this.buildAuthorization('POST', url, _params);
+    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
+    return await this.httpService.post(url, _params, headers);
+  }
+  /**
+   * 查询剩余待分金额API
+   * @documentation 请看文档https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml
+   */
+  public async query_profitsharing_amounts(transaction_id: string): Promise<ProfitSharing.QueryProfitSharingAmounts.IOutput> {
+    if (!transaction_id) throw new Error('缺少transaction_id');
+    const url = `https://api.mch.weixin.qq.com/v3/profitsharing/transactions/${transaction_id}/amounts`;
+    const authorization = this.buildAuthorization('GET', url);
+    const headers = this.getHeaders(authorization);
+    return await this.httpService.get(url, headers);
+  }
+  /**
+   * 添加分账接收方API
+   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
+   */
+  public async profitsharing_receivers_add(
+    params: ProfitSharing.ProfitSharingReceiversAdd.Input,
+  ): Promise<ProfitSharing.ProfitSharingReceiversAdd.IOutput> {
+    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/receivers/add';
+    // 请求参数
+    const _params = {
+      appid: this.appid,
+      ...params,
+    };
+
+    const serial_no = _params?.wx_serial_no;
+    delete _params.wx_serial_no;
+    const authorization = this.buildAuthorization('POST', url, _params);
+
+    const headers = this.wxPayPublicId ? this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.wxPayPublicId, 'Content-Type': 'application/json' }) :  this.getHeaders(authorization, { 'Wechatpay-Serial': serial_no || this.serial_no, 'Content-Type': 'application/json' });
+    return await this.httpService.post(url, _params, headers);
+  }
+  /**
+   * 删除分账接收方API
+   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml
+   */
+  public async profitsharing_receivers_delete(
+    params: ProfitSharing.ProfitSharingReceiversDelete.Input,
+  ): Promise<ProfitSharing.ProfitSharingReceiversDelete.IOutput> {
+    const url = 'https://api.mch.weixin.qq.com/v3/profitsharing/receivers/delete';
+    // 请求参数
+    const _params = {
+      appid: this.appid,
+      ...params,
+    };
+
+    const authorization = this.buildAuthorization('POST', url, _params);
+
+    const headers = this.getHeaders(authorization, { 'Content-Type': 'application/json','Wechatpay-Serial' : this.wxPayPublicId ? this.wxPayPublicId : null });
+    return await this.httpService.post(url, _params, headers);
+  }
+  /**
+   * 申请分账账单API
+   * @documentation https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_11.shtml
+   */
+  public async profitsharing_bills(bill_date: string, tar_type?: string): Promise<ProfitSharing.ProfitSharingBills.IOutput> {
+    if (!bill_date) throw new Error('缺少bill_date');
+    let url = `https://api.mch.weixin.qq.com/v3/profitsharing/bills`;
+    url = url + this.objectToQueryString({ bill_date, ...(tar_type && { tar_type }) });
+    const authorization = this.buildAuthorization('GET', url);
+    const headers = this.getHeaders(authorization);
+    return await this.httpService.get(url, headers);
+  }
+  //#endregion 分账
+
+
 }
 
 export = Pay;

@@ -1,13 +1,13 @@
 
 
 <p style="text-align: center;">
-  <h1 align="center"><a href="javascript:void(0);">wechatpay-node-v3-new</a></h1>
+  <h1 align="center"><a href="javascript:void(0);">wechatpay-node-v3</a></h1>
 </p>
 
-[![OSCS Status](https://www.oscs1024.com/platform/badge/klover2/wechatpay-node-v3-new-ts.svg?size=small)](https://www.oscs1024.com/project/klover2/wechatpay-node-v3-new-ts?ref=badge_small)
-[![npm version](https://badgen.net/npm/v/wechatpay-node-v3-new)](https://www.npmjs.com/package/wechatpay-node-v3-new)
-[![npm downloads](https://badgen.net/npm/dm/wechatpay-node-v3-new)](https://www.npmjs.com/package/wechatpay-node-v3-new)
-[![contributors](https://img.shields.io/github/contributors/klover2/wechatpay-node-v3-new-ts)](https://github.com/bobby169/wechatpay-node-v3-ts/graphs/contributors)
+[![OSCS Status](https://www.oscs1024.com/platform/badge/klover2/wechatpay-node-v3-ts.svg?size=small)](https://www.oscs1024.com/project/klover2/wechatpay-node-v3-ts?ref=badge_small)
+[![npm version](https://badgen.net/npm/v/wechatpay-node-v3)](https://www.npmjs.com/package/wechatpay-node-v3)
+[![npm downloads](https://badgen.net/npm/dm/wechatpay-node-v3)](https://www.npmjs.com/package/wechatpay-node-v3)
+[![contributors](https://img.shields.io/github/contributors/klover2/wechatpay-node-v3-ts)](https://github.com/bobby169/wechatpay-node-v3-ts/graphs/contributors)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # 微信支付v3 支持在ts和js中使用
@@ -24,10 +24,10 @@
 由于官方文档只支持java和php,所以我在这里使用ts简单的封装了一个版本,支持在js或者ts中使用,后续会更加完善这个npm包，谢谢。
 
 ## 使用
-`yarn add wechatpay-node-v3-new@2.1.8`(也可以用npm,请加上版本号，使用正式版本)
+`yarn add wechatpay-node-v3@2.4.0`(也可以用npm,请加上版本号，使用正式版本)
 
 ```bash
-import WxPay from 'wechatpay-node-v3-new'; // 支持使用require
+import WxPay from 'wechatpay-node-v3'; // 支持使用require
 import fs from 'fs';
 import request from 'superagent';
 
@@ -88,10 +88,10 @@ try {
     console.log(error);
   }
 ```
-如果你使用的是nest框架，请结合`nest-wechatpay-node-v3-new`一起使用。
+如果你使用的是nest框架，请结合`nest-wechatpay-node-v3`一起使用。
 
 ## 使用自定义 http 请求
-> import { IPayRequest, Output } from 'wechatpay-node-v3-new/dist/define';
+> import { IPayRequest, Output } from 'wechatpay-node-v3/dist/define';
 
 自己实现 `IPayRequest` 接口，使用如下方法注入
 
@@ -101,7 +101,7 @@ pay.createHttp(...);
 
 
 ## WxPay 介绍
-`import WxPay from 'wechatpay-node-v3-new';` 或者 `const WxPay = require('wechatpay-node-v3-new')`
+`import WxPay from 'wechatpay-node-v3';` 或者 `const WxPay = require('wechatpay-node-v3')`
 
 参数介绍
 |参数名称  |参数介绍  |是否必须|
@@ -185,7 +185,7 @@ pay.createHttp(...);
 |v2.2.0|修复回调解密报Unsupported state or unable to authenticate data |
 |v2.2.1|上传图片 |
 |v2.2.2|增加微信支付公钥回调签名验证|
-|v3.0.0|增家商家转账用户确认模式|
+|v2.3.0|增家商家转账用户确认模式|
 
 ## 文档
 [v2支付文档](https://pay.weixin.qq.com/wiki/doc/api/index.html)
@@ -195,7 +195,7 @@ pay.createHttp(...);
 
 ## 贡献
 <a href="https://github.com/bobby169/wechatpay-node-v3-ts/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=klover2/wechatpay-node-v3-new-ts" />
+  <img src="https://contrib.rocks/image?repo=klover2/wechatpay-node-v3-ts" />
 </a>
 
 欢迎提[存在的Bug或者意见](https://github.com/bobby169/wechatpay-node-v3-ts/issues)。
