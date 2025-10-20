@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "prepare": "pnpm install --frozen-lockfile && pnpm build"
+    "prepare": "pnpm build"
   },
   "dependencies": {
     "@fidm/x509": "1.2.1",
