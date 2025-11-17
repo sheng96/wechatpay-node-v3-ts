@@ -24,7 +24,8 @@
 由于官方文档只支持java和php,所以我在这里使用ts简单的封装了一个版本,支持在js或者ts中使用,后续会更加完善这个npm包，谢谢。
 
 ## 使用
-`yarn add wechatpay-node-v3@2.4.0`(也可以用npm,请加上版本号，使用正式版本)
+`pnpm add github:sheng96/wechatpay-node-v3-ts
+`(也可以用npm,请加上版本号，使用正式版本)
 
 ```bash
 import WxPay from 'wechatpay-node-v3'; // 支持使用require
